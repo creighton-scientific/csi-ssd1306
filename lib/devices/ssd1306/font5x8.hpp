@@ -1,0 +1,538 @@
+#pragma once
+
+///
+/// This font file is the work of Tom Creighton of Creighton Scientific.
+/// It is open source, licensed with the MIT license.
+///
+/// The code associated with this font file is the work of Tom Creighton, although with influence from
+/// Harbys pico-ssd1306 project. See https://github.com/Harbys/pico-ssd1306/textRenderer/5x8_font.h.
+/// The data elements within this file, the actual font data, is essentially the same as that found
+/// in the Harbys project, with some formatting difference.
+/// Since the Harbys project is licensed under the BSD 3-Clause "New" or "Revised" License, this
+/// file will also be so licensed, even though other parts of the over-all project may be licensed otherwise.
+/// The required copyright and license details can be found in the project's THIRD_PARTY_LICENSES.md file.
+///
+
+
+#include "font-base.hpp"
+
+namespace CSdevices {
+    class Font5x8 final : public Font {
+    public:
+        static constexpr uint8_t FONT_WIDTH         = 5;
+        static constexpr uint8_t FONT_HEIGHT        = 8;
+        static constexpr uint8_t ELEMENTS_PER_GLYPH = 6;    // Must be even number of elements! Add 0x00 if needed.
+
+        // Any id that is outside the closed range MIN_GLYPH_ID to MAX_GLYPH_ID is handled as space.
+        static constexpr uint8_t MIN_CHAR = 0x21;   // Although legal, 0x20 is a space. So we handle 0x20 as any other out of range.
+        static constexpr uint8_t MAX_CHAR = 0x7e;   // 0x7f is the DEL (delete) code and so there is no visible glyph.
+        static constexpr uint8_t MAX_ELEMENT_ID = 4;   // elements are 0 - 4;
+
+        Font5x8 () : Font (FONT_WIDTH, FONT_HEIGHT, MIN_CHAR, MAX_CHAR, ELEMENTS_PER_GLYPH) {}
+        ~Font5x8 () override = default;
+
+        /**
+         *
+         * @param glyphId This is just the ascii id - 0x21. Out of range characters are OUT_OF_BOUNDS_GLYPH_ID.
+         * @param elementId An index into the glyph's data set: 0 - 4
+         * @return Address of the two bytes comprising the data to put in the framebuffer.
+         */
+        [[nodiscard]] uint8_t getGlyphElement (const uint8_t glyphId, const uint8_t elementId) const override {
+            if (OUT_OF_BOUNDS_GLYPH_ID == glyphId || elementId > MAX_ELEMENT_ID) {
+                return 0; // effectively returning an element of the space character
+            }
+
+            return glyphs[glyphId][elementId];
+        }
+
+    private:
+
+        // Each glyph must have an element count such that: 0 == elementCount % 2
+        const uint8_t glyphs[94][6] = {
+            /*
+            {
+                // glyph (space) : 0x20
+                0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+            },
+            */
+
+            {
+                // glyph ! : 0x21
+                0x0, 0x0, 0x5c, 0x0, 0x0, 0x0
+            },
+
+            {
+                // glyph " : 0x22
+                0x0, 0xc, 0x0, 0xc, 0x0, 0x0
+            },
+
+            {
+                // glyph # : 0x23
+                0x28, 0x7c, 0x28, 0x7c, 0x28, 0x0
+            },
+
+            {
+                // glyph $ : 0x24
+                0x0, 0x50, 0xec, 0x28, 0x0, 0x0
+            },
+
+            {
+                // glyph % : 0x25
+                0x44, 0x2a, 0x34, 0x58, 0x24, 0x0
+            },
+
+            {
+                // glyph & : 0x26
+                0x20, 0x58, 0x54, 0x24, 0x50, 0x0
+            },
+
+            {
+                // glyph ' : 0x27
+                0x0, 0x0, 0x6, 0x0, 0x0, 0x0
+            },
+
+            {
+                // glyph ( : 0x28
+                0x0, 0x38, 0x44, 0x0, 0x0, 0x0
+            },
+
+            {
+                // glyph ) : 0x29
+                0x0, 0x44, 0x38, 0x0, 0x0, 0x0
+            },
+
+            {
+                // glyph * : 0x2a
+                0x0, 0x54, 0x38, 0x54, 0x0, 0x0
+            },
+
+            {
+                // glyph + : 0x2b
+                0x0, 0x10, 0x38, 0x10, 0x0, 0x0
+            },
+
+            {
+                // glyph , : 0x2c
+                0x0, 0x80, 0x40, 0x0, 0x0, 0x0
+            },
+
+            {
+                // glyph - : 0x2d
+                0x8, 0x8, 0x8, 0x8, 0x0, 0x0
+            },
+
+            {
+                // glyph . : 0x2e
+                0x0, 0x0, 0x40, 0x0, 0x0, 0x0
+            },
+
+            {
+                // glyph / : 0x2f
+                0x0, 0x60, 0x18, 0x4, 0x0, 0x0
+            },
+
+            {
+                // glyph 0 : 0x30
+                0x38, 0x44, 0x44, 0x38, 0x0, 0x0
+            },
+
+            {
+                // glyph 1 : 0x31
+                0x0, 0x8, 0x7c, 0x0, 0x0, 0x0
+            },
+
+            {
+                // glyph 2 : 0x32
+                0x48, 0x64, 0x54, 0x48, 0x0, 0x0
+            },
+
+            {
+                // glyph 3 : 0x33
+                0x44, 0x54, 0x54, 0x28, 0x0, 0x0
+            },
+
+            {
+                // glyph 4 : 0x34
+                0x20, 0x30, 0x28, 0x7c, 0x0, 0x0
+            },
+
+            {
+                // glyph 5 : 0x35
+                0x5c, 0x54, 0x54, 0x24, 0x0, 0x0
+            },
+
+            {
+                // glyph 6 : 0x36
+                0x38, 0x54, 0x54, 0x20, 0x0, 0x0
+            },
+
+            {
+                // glyph 7 : 0x37
+                0x4, 0x64, 0x14, 0xc, 0x0, 0x0
+            },
+
+            {
+                // glyph 8 : 0x38
+                0x28, 0x54, 0x54, 0x28, 0x0, 0x0
+            },
+
+            {
+                // glyph 9 : 0x39
+                0x8, 0x54, 0x54, 0x38, 0x0, 0x0
+            },
+
+            {
+                // glyph : : 0x3a
+                0x0, 0x0, 0x50, 0x0, 0x0, 0x0
+            },
+
+            {
+                // glyph ; : 0x3b
+                0x0, 0x80, 0x50, 0x0, 0x0, 0x0
+            },
+
+            {
+                // glyph < : 0x3c
+                0x0, 0x10, 0x28, 0x44, 0x0, 0x0
+            },
+
+            {
+                // glyph = : 0x3d
+                0x0, 0x28, 0x28, 0x28, 0x0, 0x0
+            },
+
+            {
+                // glyph > : 0x3e
+                0x0, 0x44, 0x28, 0x10, 0x0, 0x0
+            },
+
+            {
+                // glyph ? : 0x3f
+                0x0, 0x54, 0x14, 0x8, 0x0, 0x0
+            },
+
+            {
+                // glyph @ : 0x40
+                0x38, 0x44, 0x54, 0x54, 0x8, 0x0
+            },
+
+            {
+                // glyph A : 0x41
+                0x78, 0x14, 0x14, 0x78, 0x0, 0x0
+            },
+
+            {
+                // glyph B : 0x42
+                0x7c, 0x54, 0x54, 0x28, 0x0, 0x0
+            },
+
+            {
+                // glyph C : 0x43
+                0x38, 0x44, 0x44, 0x44, 0x0, 0x0
+            },
+
+            {
+                // glyph D : 0x44
+                0x7c, 0x44, 0x44, 0x38, 0x0, 0x0
+            },
+
+            {
+                // glyph E : 0x45
+                0x7c, 0x54, 0x54, 0x44, 0x0, 0x0
+            },
+
+            {
+                // glyph F : 0x46
+                0x7c, 0x14, 0x14, 0x4, 0x0, 0x0
+            },
+
+            {
+                // glyph G : 0x47
+                0x38, 0x44, 0x44, 0x68, 0x0, 0x0
+            },
+
+            {
+                // glyph H : 0x48
+                0x7c, 0x10, 0x10, 0x7c, 0x0, 0x0
+            },
+
+            {
+                // glyph I : 0x49
+                0x0, 0x44, 0x7c, 0x44, 0x0, 0x0
+            },
+
+            {
+                // glyph J : 0x4a
+                0x30, 0x40, 0x40, 0x3c, 0x0, 0x0
+            },
+
+            {
+                // glyph K : 0x4b
+                0x7c, 0x10, 0x28, 0x44, 0x0, 0x0
+            },
+
+            {
+                // glyph L : 0x4c
+                0x7c, 0x40, 0x40, 0x40, 0x0, 0x0
+            },
+
+            {
+                // glyph M : 0x4d
+                0x7c, 0x10, 0x10, 0x7c, 0x0, 0x0
+            },
+
+            {
+                // glyph N : 0x4e
+                0x7c, 0x8, 0x10, 0x7c, 0x0, 0x0
+            },
+
+            {
+                // glyph O : 0x4f
+                0x38, 0x44, 0x44, 0x38, 0x0, 0x0
+            },
+
+            {
+                // glyph P : 0x50
+                0x7c, 0x14, 0x14, 0x8, 0x0, 0x0
+            },
+
+            {
+                // glyph Q : 0x51
+                0x38, 0x44, 0x44, 0xb8, 0x0, 0x0
+            },
+
+            {
+                // glyph R : 0x52
+                0x7c, 0x14, 0x14, 0x68, 0x0, 0x0
+            },
+
+            {
+                // glyph S : 0x53
+                0x48, 0x54, 0x54, 0x24, 0x0, 0x0
+            },
+
+            {
+                // glyph T : 0x54
+                0x4, 0x4, 0x7c, 0x4, 0x4, 0x0
+            },
+
+            {
+                // glyph U : 0x55
+                0x3c, 0x40, 0x40, 0x3c, 0x0, 0x0
+            },
+
+            {
+                // glyph V : 0x56
+                0x1c, 0x60, 0x60, 0x1c, 0x0, 0x0
+            },
+
+            {
+                // glyph W : 0x57
+                0x1c, 0x60, 0x18, 0x60, 0x1c, 0x0
+            },
+
+            {
+                // glyph X : 0x58
+                0x4c, 0x30, 0x10, 0x6c, 0x0, 0x0
+            },
+
+            {
+                // glyph Y : 0x59
+                0x0, 0x1c, 0x60, 0x1c, 0x0, 0x0
+            },
+
+            {
+                // glyph Z : 0x5a
+                0x64, 0x54, 0x4c, 0x44, 0x0, 0x0
+            },
+
+            {
+                // glyph [ : 0x5b
+                0x0, 0x7c, 0x44, 0x0, 0x0, 0x0
+            },
+
+            {
+                // glyph \ : 0x5c
+                0x0, 0xc, 0x30, 0x40, 0x0, 0x0
+            },
+
+            {
+                // glyph ] : 0x5d
+                0x0, 0x44, 0x7c, 0x0, 0x0, 0x0
+            },
+
+            {
+                // glyph ^ : 0x5e
+                0x0, 0x8, 0x4, 0x8, 0x0, 0x0
+            },
+
+            {
+                // glyph _ : 0x5f
+                0x80, 0x80, 0x80, 0x80, 0x80, 0x0
+            },
+
+            {
+                // glyph ` : 0x60
+                0x0, 0x4, 0x8, 0x0, 0x0, 0x0
+            },
+
+            {
+                // glyph a : 0x61
+                0x0, 0x68, 0x28, 0x70, 0x0, 0x0
+            },
+
+            {
+                // glyph b : 0x62
+                0x7e, 0x48, 0x48, 0x30, 0x0, 0x0
+            },
+
+            {
+                // glyph c : 0x63
+                0x0, 0x30, 0x48, 0x48, 0x0, 0x0
+            },
+
+            {
+                // glyph d : 0x64
+                0x30, 0x48, 0x48, 0x7c, 0x0, 0x0
+            },
+
+            {
+                // glyph e : 0x65
+                0x30, 0x58, 0x58, 0x50, 0x0, 0x0
+            },
+
+            {
+                // glyph f : 0x66
+                0x10, 0x78, 0x14, 0x4, 0x0, 0x0
+            },
+
+            {
+                // glyph g : 0x67
+                0x10, 0xa8, 0xa8, 0x78, 0x0, 0x0
+            },
+
+            {
+                // glyph h : 0x68
+                0x7c, 0x8, 0x8, 0x70, 0x0, 0x0
+            },
+
+            {
+                // glyph i : 0x69
+                0x0, 0x48, 0x7a, 0x40, 0x0, 0x0
+            },
+
+            {
+                // glyph j : 0x6a
+                0x0, 0x80, 0x80, 0x7a, 0x0, 0x0
+            },
+
+            {
+                // glyph k : 0x6b
+                0x7c, 0x10, 0x28, 0x40, 0x0, 0x0
+            },
+
+            {
+                // glyph l : 0x6c
+                0x0, 0x42, 0x7e, 0x40, 0x0, 0x0
+            },
+
+            {
+                // glyph m : 0x6d
+                0x78, 0x10, 0x10, 0x78, 0x0, 0x0
+            },
+
+            {
+                // glyph n : 0x6e
+                0x78, 0x8, 0x8, 0x70, 0x0, 0x0
+            },
+
+            {
+                // glyph o : 0x6f
+                0x30, 0x48, 0x48, 0x30, 0x0, 0x0
+            },
+
+            {
+                // glyph p : 0x70
+                0xf8, 0x48, 0x48, 0x30, 0x0, 0x0
+            },
+
+            {
+                // glyph q : 0x71
+                0x30, 0x48, 0x48, 0xf8, 0x0, 0x0
+            },
+
+            {
+                // glyph r : 0x72
+                0x0, 0x78, 0x10, 0x8, 0x0, 0x0
+            },
+
+            {
+                // glyph s : 0x73
+                0x50, 0x58, 0x68, 0x28, 0x0, 0x0
+            },
+
+            {
+                // glyph t : 0x74
+                0x8, 0x3c, 0x48, 0x48, 0x0, 0x0
+            },
+
+            {
+                // glyph u : 0x75
+                0x38, 0x40, 0x40, 0x78, 0x0, 0x0
+            },
+
+            {
+                // glyph v : 0x76
+                0x18, 0x60, 0x60, 0x18, 0x0, 0x0
+            },
+
+            {
+                // glyph w : 0x77
+                0x78, 0x20, 0x20, 0x78, 0x0, 0x0
+            },
+
+            {
+                // glyph x : 0x78
+                0x48, 0x30, 0x30, 0x48, 0x0, 0x0
+            },
+
+            {
+                // glyph y : 0x79
+                0x18, 0xa0, 0xa0, 0x78, 0x0, 0x0
+            },
+
+            {
+                // glyph z : 0x7a
+                0x48, 0x68, 0x58, 0x48, 0x0, 0x0
+            },
+
+            {
+                // glyph { : 0x7b
+                0x0, 0x18, 0x24, 0x42, 0x0, 0x0
+            },
+
+            {
+                // glyph | : 0x7c
+                0x0, 0x0, 0x7e, 0x0, 0x0, 0x0
+            },
+
+            {
+                // glyph } : 0x7d
+                0x0, 0x42, 0x24, 0x18, 0x0, 0x0
+            },
+
+            {
+                // glyph ~ : 0x7e
+                0x10, 0x8, 0x10, 0x8, 0x0, 0x0
+            }
+
+            /* The function getGlyphElement simply returns elements of 0x20 (space)
+            {
+                // glyph ~ : 0x7f: This is the delete code. We handle it like a space
+                0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+            }
+        */
+        };
+    };
+
+}
