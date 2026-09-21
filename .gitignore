@@ -1,0 +1,37 @@
+# IDE configs
+.idea/*
+!.idea/runConfigurations
+!.idea/cmake.xml
+.vscode/*
+
+# Build directories (out-of-source builds are recommended)
+build/
+cmake-build-*/
+
+# CMake generated files (if someone builds in-tree by mistake)
+CMakeCache.txt
+CMakeFiles/
+Makefile
+*.cmake
+*.ninja
+*.ninja_deps
+*.ninja_log
+
+# Firmware and build artifacts
+*.o
+*.obj
+*.elf
+*.bin
+*.hex
+*.uf2
+*.map
+
+# Debug and logs
+*.log
+*.dSYM/
+*.stackdump
+
+# OS cruft
+.DS_Store
+Thumbs.db
+

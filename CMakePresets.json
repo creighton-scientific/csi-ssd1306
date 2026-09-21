@@ -1,0 +1,155 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 23
+    },
+    "configurePresets": [
+        {
+            "name": "csi-ssd1306-debug",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "environment": {
+                "PICO_SDK_PATH": "~/pico/pico-sdk"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "csi-ssd1306-release",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "environment": {
+                "PICO_SDK_PATH": "~/pico/pico-sdk"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "debug-rev-0-rp2040",
+            "inherits": "csi-ssd1306-debug",
+            "displayName": "Debug Rev 0",
+            "cacheVariables": {
+                "BOARD_REV": "0",
+                "PICO_BOARD": "pico"
+            }
+        },
+        {
+            "name": "debug-rev-a-rp2040",
+            "inherits": "csi-ssd1306-debug",
+            "displayName": "Debug Rev A",
+            "cacheVariables": {
+                "BOARD_REV": "A",
+                "PICO_BOARD": "pico"
+            }
+        },
+        {
+            "name": "debug-rev-b-rp2040",
+            "inherits": "csi-ssd1306-debug",
+            "displayName": "Debug Rev B",
+            "cacheVariables": {
+                "BOARD_REV": "B",
+                "PICO_BOARD": "pico"
+            }
+        },
+        {
+            "name": "release-rev-0-rp2040",
+            "inherits": "csi-ssd1306-release",
+            "displayName": "Release Rev 0",
+            "cacheVariables": {
+                "BOARD_REV": "0",
+                "PICO_BOARD": "pico"
+            }
+        },
+        {
+            "name": "release-rev-a-rp2040",
+            "inherits": "csi-ssd1306-release",
+            "displayName": "Release Rev A",
+            "cacheVariables": {
+                "BOARD_REV": "A",
+                "PICO_BOARD": "pico"
+            }
+        },
+        {
+            "name": "release-rev-b-rp2040",
+            "inherits": "csi-ssd1306-release",
+            "displayName": "Release Rev B",
+            "cacheVariables": {
+                "BOARD_REV": "B",
+                "PICO_BOARD": "pico"
+            }
+        },
+        {
+            "name": "debug-rev-0-rp2350",
+            "inherits": "csi-ssd1306-debug",
+            "displayName": "Debug Rev 0",
+            "cacheVariables": {
+                "BOARD_REV": "0",
+                "PICO_BOARD": "pico2"
+            }
+        },
+        {
+            "name": "debug-rev-a-rp2350",
+            "inherits": "csi-ssd1306-debug",
+            "displayName": "Debug Rev A",
+            "cacheVariables": {
+                "BOARD_REV": "A",
+                "PICO_BOARD": "pico2"
+            }
+        },
+        {
+            "name": "debug-rev-b-rp2350",
+            "inherits": "csi-ssd1306-debug",
+            "displayName": "Debug Rev B",
+            "cacheVariables": {
+                "BOARD_REV": "B",
+                "PICO_BOARD": "pico2"
+            }
+        },
+        {
+            "name": "release-rev-0-rp2350",
+            "inherits": "csi-ssd1306-release",
+            "displayName": "Release Rev 0",
+            "cacheVariables": {
+                "BOARD_REV": "0",
+                "PICO_BOARD": "pico2"
+            }
+        },
+        {
+            "name": "release-rev-a-rp2350",
+            "inherits": "csi-ssd1306-release",
+            "displayName": "Release Rev A",
+            "cacheVariables": {
+                "BOARD_REV": "A",
+                "PICO_BOARD": "pico2"
+            }
+        },
+        {
+            "name": "release-rev-b-rp2350",
+            "inherits": "csi-ssd1306-release",
+            "displayName": "Release Rev B",
+            "cacheVariables": {
+                "BOARD_REV": "B",
+                "PICO_BOARD": "pico2"
+            }
+        }
+    ],
+    "buildPresets": [
+        { "name": "debug-rev-0-rp2040", "configurePreset": "debug-rev-0-rp2040" },
+        { "name": "debug-rev-a-rp2040", "configurePreset": "debug-rev-a-rp2040" },
+        { "name": "debug-rev-b-rp2040", "configurePreset": "debug-rev-b-rp2040" },
+        { "name": "release-rev-0-rp2040", "configurePreset": "release-rev-0-rp2040" },
+        { "name": "release-rev-a-rp2040", "configurePreset": "release-rev-a-rp2040" },
+        { "name": "release-rev-b-rp2040", "configurePreset": "release-rev-b-rp2040" },
+        { "name": "debug-rev-0-rp2350", "configurePreset": "debug-rev-0-rp2350" },
+        { "name": "debug-rev-a-rp2350", "configurePreset": "debug-rev-a-rp2350" },
+        { "name": "debug-rev-b-rp2350", "configurePreset": "debug-rev-b-rp2350" },
+        { "name": "release-rev-0-rp2350", "configurePreset": "release-rev-0-rp2350" },
+        { "name": "release-rev-a-rp2350", "configurePreset": "release-rev-a-rp2350" },
+        { "name": "release-rev-b-rp2350", "configurePreset": "release-rev-b-rp2350" }
+    ]
+}
